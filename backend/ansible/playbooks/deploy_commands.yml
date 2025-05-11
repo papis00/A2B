@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Deploy Network Commands",
+    "hosts": "network_devices",
+    "gather_facts": false,
+    "tasks": []
+  }
+]
