@@ -15,9 +15,10 @@ const CommandTranslator = () => {
   const [deviceInfo, setDeviceInfo] = useState({
     ip: '',
     username: '',
-    sshKey: '',
+    // sshKey: '',
     password: '',
-    port: '22'
+    port: '22',
+    type: ''
   });
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
@@ -104,21 +105,22 @@ const CommandTranslator = () => {
   const handleUpload = async () => {
     try {
       const deploymentData = {
-        device: {
-          ...deviceInfo,
-          commands: commandHistory.map(cmd => cmd.translated)
-        }
-      };
+        device: {...deviceInfo },
+        commands: commandHistory.map(cmd => cmd.translated)
+        };
       console.log("voici mes commandes", deploymentData.device.commands);
       console.log("voici mes commandes History", commandHistory);
       console.log("voici mon deployment data", deploymentData);
 
+      setIsLoading(true);
       const response = await axios.post('/api/deploy/', deploymentData);
+      setIsLoading(false)
       if (response.data.success) {
         alert('Déploiement réussi !');
       }
       setShowModal(false);
-    } catch (err) {
+    }
+      catch (err) {
       setError(err.response?.data?.error || 'Échec du déploiement');
       alert('Erreur lors du déploiement: ' + err.message);
     }
@@ -380,13 +382,13 @@ const CommandTranslator = () => {
                   onChange={(e) => setDeviceInfo({...deviceInfo, password: e.target.value})}
                   className="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-4 py-2"
                 />
-                <input
+                {/* <input
                   type="text"
                   placeholder="Clé SSH"
                   value={deviceInfo.sshKey}
                   onChange={(e) => setDeviceInfo({...deviceInfo, sshKey: e.target.value})}
                   className="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-4 py-2"
-                />
+                /> */}
                 <input
                   type="text"
                   placeholder="Port SSH"
@@ -394,6 +396,14 @@ const CommandTranslator = () => {
                   onChange={(e) => setDeviceInfo({...deviceInfo, port: e.target.value})}
                   className="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-4 py-2"
                 />
+                <select value={deviceInfo.type} onChange={(e) => setDeviceInfo({...deviceInfo, type: e.target.value })} 
+                required
+                className='w-full bg-[#0f172a] border border-[#334155] rounded-lg px-4 py-2 '
+                >
+                  <option value="" disabled>Choisir le type</option>
+                  <option value="cisco">Cisco</option>
+                  <option value="huawei">Huawei</option>
+                </select>
                 <div className="flex justify-end space-x-4 mt-6">
                   <button
                     onClick={() => { 
@@ -401,7 +411,6 @@ const CommandTranslator = () => {
                       setDeviceInfo({
                         ip: '',
                         username: '',
-                        sshKey: '',
                         password: '',
                         port: '22'
                       });

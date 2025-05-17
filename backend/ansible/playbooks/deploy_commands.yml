@@ -1,20 +1,17 @@
----
 - name: Deploy Network Commands
   hosts: network_devices
   gather_facts: false
   tasks:
-    - name: Execute Cisco commands
-      cisco.ios.ios_command:
-        commands: "{{ commands }}"
-      register: command_output
-      when: device_type == "cisco"
-
-    - name: Execute Huawei commands
-      huawei.vrp.vrp_command:
-        commands: "{{ commands }}"
-      register: command_output
-      when: device_type == "huawei"
-
-    - name: Show command outputs
-      debug:
-        var: command_output
+  - name: Run Cisco commands
+    cisco.ios.ios_command:
+      commands: '{{ commands }}'
+    register: command_output
+    when: device_type == 'cisco'
+  - name: Run Huawei commands
+    community.network.ce_command:
+      commands: '{{ commands }}'
+    register: command_output
+    when: device_type == 'huawei'
+  - name: "Afficher les r\xE9sultats"
+    debug:
+      var: command_output

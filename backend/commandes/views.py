@@ -63,26 +63,28 @@ def deploy_commands(request):
         if not device_info:
             return Response({'error': 'Les informations du périphérique sont manquantes'}, status=400)
 
-        commands = device_info.pop('commands', [])
+        commands = request.data.get('commands', [])
         if not commands:
             return Response({'error': 'Aucune commande à déployer'}, status=400)
 
         deployment_manager = DeploymentManager()
         result = deployment_manager.deploy_commands(
             device_info=device_info,
-            commands=device_info.get('commands', [])
+            commands=commands
         )
 
         if result['success']:
             return Response({
                 'success': True,
-                'message': 'le déploiement a réussi',
-                'log_id': result['log_id']
+                'message': 'Le déploiement a réussi',
+                'log_id': result['log_id'],
+                'output': result['output']
             })
         else:
             return Response({
                 'success': False,
-                'error': result.get('error', 'le déploiement a échoué'),
+                'error': result.get('error', 'Le déploiement a échoué'),
+                'output': result.get('output', '')
             }, status=400)
 
     except Exception as e:
@@ -90,3 +92,39 @@ def deploy_commands(request):
             'success': False,
             'error': str(e)
         }, status=500)
+
+
+# @api_view(['POST'])
+# def deploy_commands(request):
+#     try:
+#         device_info = request.data.get('device')
+#         if not device_info:
+#             return Response({'error': 'Les informations du périphérique sont manquantes'}, status=400)
+
+#         commands = device_info.pop('commands', [])
+#         if not commands:
+#             return Response({'error': 'Aucune commande à déployer'}, status=400)
+
+#         deployment_manager = DeploymentManager()
+#         result = deployment_manager.deploy_commands(
+#             device_info=device_info,
+#             commands=device_info.get('commands', [])
+#         )
+
+#         if result['success']:
+#             return Response({
+#                 'success': True,
+#                 'message': 'le déploiement a réussi',
+#                 'log_id': result['log_id']
+#             })
+#         else:
+#             return Response({
+#                 'success': False,
+#                 'error': result.get('error', 'le déploiement a échoué'),
+#             }, status=400)
+
+#     except Exception as e:
+#         return Response({
+#             'success': False,
+#             'error': str(e)
+#         }, status=500)

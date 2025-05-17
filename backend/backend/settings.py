@@ -81,12 +81,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'a2b_db',
-        'USER': 'papis',
-        'PASSWORD': 'passe',
+        'USER': 'mbenda',
+        'PASSWORD': 'passer',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '3306',
+        
     }
 }
 

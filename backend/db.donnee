@@ -2,7 +2,7 @@
 # Copiez-collez les commandes ci-dessous une par une ou en blocs.
 # Assurez-vous que les modèles (Constructor, CommandAction, etc.) sont déjà migrés.
 
-from translator.models import Constructor, CommandAction, CommandVariant, CommandAlias, CommandParameter
+from commandes.models import Constructor, CommandAction, CommandVariant, CommandAlias, CommandParameter
 
 # --- Table Constructor ---
 # Création de 5 constructeurs
