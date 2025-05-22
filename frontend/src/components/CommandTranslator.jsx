@@ -107,7 +107,7 @@ const CommandTranslator = () => {
       const deploymentData = {
         device: {...deviceInfo },
         commands: commandHistory.map(cmd => cmd.translated)
-        };
+        }; m
       console.log("voici mes commandes", deploymentData.device.commands);
       console.log("voici mes commandes History", commandHistory);
       console.log("voici mon deployment data", deploymentData);

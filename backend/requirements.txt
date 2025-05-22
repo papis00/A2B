@@ -1,4 +1,13 @@
-django==5.0.6
-djangorestframework==3.15.2
-django-cors-headers==4.4.0
-psycopg2
+Package             Version
+------------------- -------
+asgiref             3.8.1
+Django              5.0.6
+django-cors-headers 4.4.0
+djangorestframework 3.15.2
+mysqlclient         2.2.7
+pip                 22.0.2
+psycopg2-binary     2.9.10
+PyYAML              6.0.2
+setuptools          59.6.0
+sqlparse            0.5.3
+typing_extensions   4.13.2
